@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Python Web Page</title>
+    </head>
+    <style>
+        body,html{
+            padding: 0;
+            margin: 0;
+        }
+        td {
+            padding: 10px; 
+            margin:10px
+        }
+        
+        h3{
+            padding: 15px;
+            background: #33398c;
+            margin-top: 0;
+            color:#fff;
+            font-size:26px;
+            font-family: helvetica;
+        }
+        .formcontainer {
+            margin:0 auto;
+            text-align: left;
+            width:20%;
+            background: #efefef;
+            padding: 30px 90px;
+            margin-bottom: 20px;
+
+        }
+        form {
+            margin:10px 
+        }
+        table input[type="submit"]{
+            font-size: 10px;
+            padding: 3px 0;
+            margin: 0;
+            width:60px;
+            background: #efefef;
+            border:1px solid #ddd;
+         }
+
+        table input[type="text"]{
+           width: 250px; 
+        }
+        input[type="submit"]{
+            width: 80px;
+        }
+        table {
+            counter-reset: rowNumber;
+            border-collapse: collapse;
+        }
+
+        table form{
+            display: inline;
+            margin:0;
+        }
+        td,th, table {
+        border: 1px solid #999; /* just to make borders visible. */
+        }
+        th{
+            background:  #33398c;
+            color:#fff;
+            font-family:helvetica;
+            font-size:12px;
+            padding:5px 0;
+        }
+        table tr > td:first-child {
+            counter-increment: rowNumber;
+        }
+                
+        table tr td:first-child::before {
+            content: counter(rowNumber);
+        }
+        
+    </style>
+    <body>
+        
+        <div class="main"> 
+            <center>
+                <h3>Welcome to Job portals</h3>
+            <div class="formcontainer">
+                <form action="/add" method="POST">
+                    <input id="addname" type="text" name="addname" placeholder="Add Job">
+                    <input id="add" type ="submit" value="ADD">
+                </form> 
+                    
+                <form action="/search" method="POST">
+                    <input id="searchname" type="text" name="searchname" placeholder="Search Job">
+                    <input id="search" type ="submit" value="SEARCH">
+                </form>    
+            </div>
+
+            <table >
+                
+                <tr>
+                    <th>ID</th>
+                    <th>TITLE</th>
+                    
+                </tr>
+               {% for job in jobSts %} 
+                <tr>
+                    <td>{{job.ids}}</td>
+                    <td>
+                        <form action="/edit" method="POST" >
+                          <input style="border: 0;" width="200px" type="hidden" value="{{job.name}}" name="oldtitle">
+                          <input style="border: 0;" width="200px" type="text" value="{{job.name}}" name="newtitle">
+                          <input type="submit" value="EDIT">
+                        </form>
+                        <form action="/delete/{{job.name}}">
+                            <input type="submit" value="DELETE" />
+                        </form>
+                       
+                    </td>
+                    
+                 </tr>
+               {% endfor %}
+                
+            </table>
+                
+           </center>
+  
+       </div>
+            
+    </body>
+   
+</html>
